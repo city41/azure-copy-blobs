@@ -1,0 +1,60 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AzureCopyBlobs {
+
+    /**
+     * Rename this file from Config.cs.example to Config.cs
+     * 
+     * You need to set ALL of these values below before starting. They should be pretty straight forward
+     */
+    public static class Config {
+        /**
+         * The connection string for the storage account to copy from
+         * It will look like this:
+         * 
+         *   DefaultEndpointsProtocol=https;AccountName=<AccountName>6;AccountKey=<AccountKey>
+         *   
+         *  You can get these values inside the Azure management portal, see the README for more info
+         */
+        public const string SourceStorageAccountConnectionString = "<set me>";
+
+        /**
+         * The connection string for the storage account to copy to
+         * It will look like this:
+         * 
+         *   DefaultEndpointsProtocol=https;AccountName=<AccountName>6;AccountKey=<AccountKey>
+         *   
+         *  You can get these values inside the Azure management portal, see the README for more info
+         */
+        public const string DestStorageAccountConnectionString = "<set me>";
+
+        /**
+         * How long the SAS token should be valid. This really depends on what you are copying.
+         * In my experience, a 128GB blob can take about 15 minutes to copy within the same region.
+         * A larger blob, or a blob going across regions can take even longer. Set accordingly.
+         * 
+         * NOTE: I found when copying a file, it will slowly creep for a while, then suddenly jump from 10% to 100% in one shot.
+         * The initial pace of the copy doesn't necessarily indicate how long the whole thing will take
+         */
+        public const int SASDurationInMinutes = 15;
+
+        /**
+         * The name of the container to copy the blobs from. The destination account will
+         * get a container of the same name. It will create the destination container if needed
+         */
+        public const string ContainerName = "myContainer";
+
+        /**
+         * The blobs you wish to copy. They will be copied one by one, serially.
+         */
+        public static readonly string[] BlobsToCopy = {
+            "myharddrive.vhd",
+            "myotherblob.txt"
+            // etc
+        };
+    }
+}
